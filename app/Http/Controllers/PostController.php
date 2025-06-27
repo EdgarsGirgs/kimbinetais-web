@@ -11,21 +11,21 @@ class PostController extends Controller
 {
     public function index()
     {
-        // $userId = Auth::id();
+        $userId = Auth::id();
 
-        // $posts = Post::with('status')
-        //     ->where(function ($query) use ($userId) {
-        //         $query->whereHas('status', function ($query) {
-        //             $query->where('name', PostStatus::STATUS_PUBLIC);
-        //         })
-        //         ->orWhere(function ($query) use ($userId) {
-        //             $query->where('user_id', $userId)
-        //                 ->whereHas('status', function ($query) {
-        //                     $query->where('name', PostStatus::STATUS_PRIVATE); // Assuming you have a constant for private status
-        //                 });
-        //         });
-        //     })
-        //     ->get();
+        $posts = Post::with('status')
+            ->where(function ($query) use ($userId) {
+                $query->whereHas('status', function ($query) {
+                    $query->where('name', PostStatus::STATUS_PUBLIC);
+                })
+                ->orWhere(function ($query) use ($userId) {
+                    $query->where('user_id', $userId)
+                        ->whereHas('status', function ($query) {
+                            $query->where('name', PostStatus::STATUS_PRIVATE); // Assuming you have a constant for private status
+                        });
+                });
+            })
+            ->get();
 
         $posts = Post::all();
         return view('post.index', ['posts' => $posts]);

@@ -25,7 +25,7 @@
                                     @endif
                                 </h2>
 
-                                <h3>by {{ $post->user->name }}</h3>
+                                <h3>by {{ $post->user }}</h3>
                                 <p>{{ $post->content }}</p>
                                 @if ($post->image_path)
                                     <img src="{{ Storage::url($post->image_path) }}" alt="Post Image">
